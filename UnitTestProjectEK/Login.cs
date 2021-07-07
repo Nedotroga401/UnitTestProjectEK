@@ -19,8 +19,7 @@ namespace UnitTestProjectEK
         public void Start()
         {
            driver = new ChromeDriver();
-           // driver = new FirefoxDriver();
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+           wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
         [Test]

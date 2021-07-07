@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="GoogleCheck.cs" />
     <Compile Include="ListCheck.cs" />
+    <Compile Include="Task 8. Duck stickers.cs" />
     <Compile Include="Task 9. Countries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Login.cs" />
