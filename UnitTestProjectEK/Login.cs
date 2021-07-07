@@ -3,12 +3,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
 namespace UnitTestProjectEK
 {
     [TestFixture]
-    public class UnitTest2
+    public class LoginTest
+
     {
         private IWebDriver driver;
         private WebDriverWait wait;
@@ -16,7 +18,8 @@ namespace UnitTestProjectEK
         [SetUp]
         public void Start()
         {
-            driver = new ChromeDriver();
+           driver = new ChromeDriver();
+           // driver = new FirefoxDriver();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 

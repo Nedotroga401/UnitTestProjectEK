@@ -9,7 +9,7 @@ using OpenQA.Selenium.Support.UI;
 namespace UnitTestProjectEK
 {
     [TestFixture]
-    public class UnitTest1
+    public class GoogleCheck
     {
         private IWebDriver driver;
         private WebDriverWait wait;
@@ -22,7 +22,7 @@ namespace UnitTestProjectEK
         }
 
         [Test]
-        public void FirstTest()
+        public void Google()
         {
             driver.Url = "http://www.google.com/";
         }
