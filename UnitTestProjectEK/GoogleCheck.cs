@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace UnitTestProjectEK
 {
-    [TestFixture]
+ /*   [TestFixture]
     public class GoogleCheck
     {
         private IWebDriver driver;
@@ -35,5 +35,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }
+    }*/
 }

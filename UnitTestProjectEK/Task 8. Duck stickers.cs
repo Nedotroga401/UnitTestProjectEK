@@ -11,7 +11,7 @@ using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
 {
-    [TestFixture]
+ /*   [TestFixture]
     public class DuckStickers
 
     {
@@ -58,5 +58,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }
+    }*/
 }

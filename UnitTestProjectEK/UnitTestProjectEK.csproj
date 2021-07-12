@@ -106,8 +106,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GoogleCheck.cs" />
+    <Compile Include="Task 11.Registration.cs" />
+    <Compile Include="Task 12. Add duck.cs" />
     <Compile Include="ListCheck.cs" />
     <Compile Include="Task 8. Duck stickers.cs" />
+    <Compile Include="Task 13. Wait basket.cs" />
     <Compile Include="Task 9. Countries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Login.cs" />
