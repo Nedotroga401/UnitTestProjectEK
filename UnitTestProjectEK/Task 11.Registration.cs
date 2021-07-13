@@ -15,9 +15,9 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
-{
+{/*
     [TestFixture]
-    public class ListCheck
+    public class Registration
 
     {
         private IWebDriver driver;
@@ -32,7 +32,7 @@ namespace UnitTestProjectEK
 
         
         [Test]
-        public void AllButtonsClick()
+        public void RegistrationNew()
         {
             Random rnd = new Random();
             int rnd_user = rnd.Next(0, 100);
@@ -78,5 +78,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }
+    }*/
 }
