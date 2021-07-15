@@ -15,7 +15,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
-{/*
+{
     [TestFixture]
     public class Registration
 
@@ -35,7 +35,7 @@ namespace UnitTestProjectEK
         public void RegistrationNew()
         {
             Random rnd = new Random();
-            int rnd_user = rnd.Next(0, 100);
+            int rnd_user = rnd.Next(100, 200);
             string rnd_name = "Kate" + rnd_user.ToString();
             string rnd_last = "Smith" + rnd_user.ToString();
             string rnd_email = "test" + rnd_user.ToString() + "@test.com";
@@ -63,11 +63,15 @@ namespace UnitTestProjectEK
             IWebElement logout = waitbutton.Until(ExpectedConditions.ElementExists(By.CssSelector("[href$=logout]")));
             logout.Click();
 
-            IWebElement login = waitbutton.Until(ExpectedConditions.ElementExists(By.CssSelector("[name=email]")));
-            login.SendKeys(rnd_email);
-            driver.FindElement(By.Name("email")).SendKeys("12345");
+            IWebElement loginemail = waitbutton.Until(ExpectedConditions.ElementExists(By.CssSelector("[name=email]")));
+            loginemail.SendKeys(rnd_email);
+            driver.FindElement(By.Name("password")).SendKeys("12345");
+
             IWebElement login_new = waitbutton.Until(ExpectedConditions.ElementExists(By.Name("login")));
             login_new.Click();
+
+            IWebElement check = waitbutton.Until(ExpectedConditions.ElementExists(By.LinkText("Logout")));
+           
         }
 
         [TearDown]
@@ -78,5 +82,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }*/
+    }
 }

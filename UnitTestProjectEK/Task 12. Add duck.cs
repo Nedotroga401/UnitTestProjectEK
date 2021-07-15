@@ -73,6 +73,8 @@ namespace UnitTestProjectEK
 
             driver.FindElement(By.Name("prices[USD]")).SendKeys("15");
             driver.FindElement(By.Name("save")).Click();
+
+            IWebElement duckCheck = waitbutton.Until(ExpectedConditions.ElementExists(By.LinkText("Batman Duck")));
         }
 
         [TearDown]
