@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -24,79 +27,80 @@ namespace UnitTestProjectEK
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
         
-        public bool IsPriceNull(IWebElement element)
-        {
-            string price = driver.FindElement(By.CssSelector("[class=price]")).GetAttribute("price");
-            if (price != "0")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-
-        public bool IsSizePresent(IWebElement element)
-        {
-            IList<IWebElement> size = driver.FindElements(By.Name("option[Size]"));
-            if (size.Count == 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-           
-        }
-
         [Test]
         public void WaitForBasket()
         {
-            driver.Url = "http://localhost:8080/litecart/";
+           // driver.Url = "http://localhost:8080/litecart/";
+            driver.Url = "https://litecart.stqa.ru/en/";
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
 
             for (int i = 0; i < 3; i++)
             {
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-                IWebElement product = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=manufacturer]")));
                 IList<IWebElement> allproducts = driver.FindElements(By.ClassName("manufacturer"));
+                IWebElement waitpage = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("[id=box-latest-products]")));
                 allproducts[i].Click();
 
-                if (IsSizePresent(allproducts[i]))
+               IList<IWebElement> size = driver.FindElements(By.CssSelector("select"));
+               int s = size.Count;
+
+                if (s!=0)
                 {
-                    IWebElement sizeoption = driver.FindElement(By.Name("option[Size]"));
+                    IWebElement sizeElement = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("[class=options]")));
+                    sizeElement.Click();
+                    IWebElement sizeoption = driver.FindElement(By.CssSelector("select"));
                     SelectElement selector = new SelectElement(sizeoption);
+                    sizeoption.Click();
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("option")));
                     selector.SelectByIndex(1);
+                    
+                    IWebElement button1 = wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("[name=add_cart_product]")));
+                    button1.Click();
+                    string ii = (i+1).ToString();
+                    IWebElement elementCart = driver.FindElement(By.CssSelector("[class=quantity]"));
+                    
+                    wait.Until(ExpectedConditions.TextToBePresentInElement(elementCart, ii));
+                    
+                    Console.WriteLine("Duck with size was selected");
+                    
+                    driver.Navigate().GoToUrl("https://litecart.stqa.ru/en/");
                 }
-
-                if (!IsPriceNull(allproducts[i]))
+                else
                 {
-                    IWebElement button = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[name=add_cart_product]")));
+                    wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("[class=index]")));
+                    IWebElement button = wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("[name=add_cart_product]")));
                     button.Click();
-                    driver.Navigate().Refresh();
-                    IWebElement cartitems = driver.FindElement(By.CssSelector("[class=quantity]"));
-                    string ii = i.ToString();
-                    wait.Until(ExpectedConditions.TextToBePresentInElementValue(cartitems, ii));
-                    driver.Navigate().Back();
+                    string ii = (i+1).ToString();
+                    IWebElement elementCart = driver.FindElement(By.CssSelector("[class=quantity]"));
+                    wait.Until(ExpectedConditions.TextToBePresentInElement(elementCart, ii));
+                    driver.Navigate().GoToUrl("https://litecart.stqa.ru/en/");
+                    
                 }
             }
-          
-            IWebElement cart = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=quantity]")));
-            cart.Click();
-            IList<IWebElement> table = driver.FindElements(By.CssSelector("[class=shortcut]"));
-            int number = table.Count;
+             IWebElement carquantity = wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("[class=quantity]")));
+             carquantity.Click();
+             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=content]")));
 
-          for (int j = 0; j < number; j++)
+
+            for (int j = 0; j < 3; j++)
             {
-                
-                IWebElement pr = wait.Until(ExpectedConditions.ElementIsVisible(By.Name("remove_chart_item")));
+                IList<IWebElement> order = driver.FindElements(By.Id("order_confirmation-wrapper"));
+                int orderCount = order.Count;
+                IWebElement pr = driver.FindElement(By.Name("remove_cart_item"));
                 pr.Click();
-                IWebElement result = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[tag=table]")));
+                
+                
+                if (orderCount != 0)
+                {
+                   IList<IWebElement> elements = order[0].FindElements(By.CssSelector("[class=item]"));
+                  
+                    string str = elements[0].Text;
+                    wait.Until(ExpectedConditions.InvisibilityOfElementWithText(By.CssSelector("[class=item]"), str));
+                    
+                }
             }
 
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector("[tag=table]")));
+
+
         }
 
         [TearDown]
