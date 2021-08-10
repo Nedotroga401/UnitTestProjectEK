@@ -11,7 +11,7 @@ using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
 {
- /*   [TestFixture]
+    [TestFixture]
     public class DuckStickers
 
     {
@@ -22,7 +22,6 @@ namespace UnitTestProjectEK
         public void Start()
         {
            driver = new ChromeDriver();
-           // driver = new FirefoxDriver();
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
@@ -46,8 +45,6 @@ namespace UnitTestProjectEK
                 
             }
 
-            
-
         }
 
         [TearDown]
@@ -58,5 +55,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }*/
+    }
 }
