@@ -16,7 +16,7 @@ namespace UnitTestProjectEK
     [TestFixture]
     public class BasketCheck
 
-    {
+    {/*
         private IWebDriver driver;
         private WebDriverWait wait;
 
@@ -76,6 +76,7 @@ namespace UnitTestProjectEK
                     
                 }
             }
+
              IWebElement carquantity = wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("[class=quantity]")));
              carquantity.Click();
              wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=content]")));
@@ -85,16 +86,17 @@ namespace UnitTestProjectEK
             {
                 IList<IWebElement> order = driver.FindElements(By.Id("order_confirmation-wrapper"));
                 int orderCount = order.Count;
+
                 IWebElement pr = driver.FindElement(By.Name("remove_cart_item"));
                 pr.Click();
-                
+
                 
                 if (orderCount != 0)
                 {
                    IList<IWebElement> elements = order[0].FindElements(By.CssSelector("[class=item]"));
-                  
-                    string str = elements[0].Text;
-                    wait.Until(ExpectedConditions.InvisibilityOfElementWithText(By.CssSelector("[class=item]"), str));
+                   string str = elements[j].Text;
+                   Console.WriteLine(str);
+                   wait.Until(ExpectedConditions.InvisibilityOfElementWithText(By.CssSelector("[class=item]"), str));
                     
                 }
             }
@@ -108,7 +110,7 @@ namespace UnitTestProjectEK
         {
             driver.Quit();
             driver = null;
-        }
+        }*/
 
 
     }

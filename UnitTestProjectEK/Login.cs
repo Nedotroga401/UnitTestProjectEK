@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support.UI;
 
 namespace UnitTestProjectEK
 {
-  /*  [TestFixture]
+   [TestFixture]
     public class LoginTest
 
     {
@@ -39,5 +39,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }*/
+    }
 }
