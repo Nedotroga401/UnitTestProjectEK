@@ -10,7 +10,7 @@ using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
 {
-  /*  [TestFixture]
+   [TestFixture]
     public class CheckCountries
 
     {
@@ -57,5 +57,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }*/
+    }
 }

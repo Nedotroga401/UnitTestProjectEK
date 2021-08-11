@@ -39,9 +39,7 @@ namespace UnitTestProjectEK
             driver.FindElement(By.Name("username")).SendKeys("admin");
             driver.FindElement(By.Name("password")).SendKeys("admin");
             driver.FindElement(By.Name("login")).Click();
-          
-          IList<IWebElement> allButtons = driver.FindElements(By.Id("app-"));
-
+            IList<IWebElement> allButtons = driver.FindElements(By.Id("app-"));
             int count = allButtons.Count;
             
             for (int i = 0; i < count; i++)
@@ -49,9 +47,14 @@ namespace UnitTestProjectEK
                 WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
                 IWebElement element = wait2.Until(ExpectedConditions.ElementExists(By.Id("app-")));
                 IList<IWebElement> allButtonss = driver.FindElements(By.Id("app-"));
+                
 
                 if (allButtonss[i] != null && allButtonss[i].Displayed && allButtonss[i].Enabled)
                     allButtonss[i].Click();
+
+                IList<IWebElement> allButtonsss = driver.FindElements(By.Id("app-"));
+                IList<IWebElement> ineetlist = allButtonsss[i].FindElements(By.CssSelector("[id^=doc]"));
+                int countt = ineetlist.Count;
 
                 if (driver.FindElement(By.TagName("h1"))!= null)
                 {
@@ -60,6 +63,12 @@ namespace UnitTestProjectEK
                 else
                 {
                     Console.WriteLine("Заголовка нет");
+                }
+
+                for (int j=0; j<countt;j++)
+                {
+                    if(ineetlist[j]!=null&&ineetlist[j].Displayed&&ineetlist[j].Enabled)
+                    ineetlist[j].Click();
                 }
             }
         }

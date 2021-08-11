@@ -7,7 +7,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
 namespace UnitTestProjectEK
-{
+{/*
    [TestFixture]
     public class LoginTest
 
@@ -39,5 +39,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }
+    }*/
 }

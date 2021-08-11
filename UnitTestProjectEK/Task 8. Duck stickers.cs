@@ -41,7 +41,7 @@ namespace UnitTestProjectEK
                     string text = allDucks[i].FindElement(By.CssSelector("[class^=sticker]")).Text.ToString();
                     Console.WriteLine(text);
                 }
-                else Console.WriteLine("Больше чем один стикер");
+                else Console.WriteLine("Стикер не один");
                 
             }
 
