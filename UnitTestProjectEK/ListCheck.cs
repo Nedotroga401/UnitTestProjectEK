@@ -44,8 +44,8 @@ namespace UnitTestProjectEK
             
             for (int i = 0; i < count; i++)
             {
-                WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
-                IWebElement element = wait2.Until(ExpectedConditions.ElementExists(By.Id("app-")));
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+                IWebElement element = wait.Until(ExpectedConditions.ElementExists(By.Id("app-")));
                 IList<IWebElement> allButtonss = driver.FindElements(By.Id("app-"));
                 
 
@@ -53,8 +53,8 @@ namespace UnitTestProjectEK
                     allButtonss[i].Click();
 
                 IList<IWebElement> allButtonsss = driver.FindElements(By.Id("app-"));
-                IList<IWebElement> ineetlist = allButtonsss[i].FindElements(By.CssSelector("[id^=doc]"));
-                int countt = ineetlist.Count;
+                IList<IWebElement> inlist = allButtonsss[i].FindElements(By.CssSelector("[id^=doc]"));
+                int incount = inlist.Count;
 
                 if (driver.FindElement(By.TagName("h1"))!= null)
                 {
@@ -65,10 +65,14 @@ namespace UnitTestProjectEK
                     Console.WriteLine("Заголовка нет");
                 }
 
-                for (int j=0; j<countt;j++)
+                for (int j = 0; j < incount; j++)
                 {
-                    if(ineetlist[j]!=null&&ineetlist[j].Displayed&&ineetlist[j].Enabled)
-                    ineetlist[j].Click();
+                   
+                    IWebElement allButtonCheck = driver.FindElement(By.CssSelector("[class=docs]"));
+                    IList<IWebElement> inlist2 = allButtonCheck.FindElements(By.CssSelector("[id^=doc]"));
+                    if (inlist2[j]!=null&&inlist2[j].Displayed&&inlist2[j].Enabled)
+                    inlist2[j].Click();
+
                 }
             }
         }
