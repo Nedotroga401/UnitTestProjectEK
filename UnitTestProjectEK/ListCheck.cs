@@ -15,7 +15,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
-{/*
+{
     [TestFixture]
     public class ListCheck
 
@@ -73,6 +73,14 @@ namespace UnitTestProjectEK
                     if (inlist2[j]!=null&&inlist2[j].Displayed&&inlist2[j].Enabled)
                     inlist2[j].Click();
 
+                    if (driver.FindElement(By.TagName("h1")) != null)
+                    {
+                        Console.WriteLine("Заголовок есть");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Заголовка нет");
+                    }
                 }
             }
         }
@@ -85,5 +93,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }*/
+    }
 }
