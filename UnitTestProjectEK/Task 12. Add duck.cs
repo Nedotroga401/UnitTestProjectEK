@@ -56,6 +56,8 @@ namespace UnitTestProjectEK
             driver.FindElement(By.Name("code")).SendKeys("bd001");
             driver.FindElement(By.Name("quantity")).Clear();
             driver.FindElement(By.Name("quantity")).SendKeys("25");
+            driver.FindElement(By.Name("date_valid_from")).SendKeys("01-01-2021");
+            driver.FindElement(By.Name("date_valid_from")).SendKeys("01-01-2022");
 
             string path = "batmen_duck.jpg";
             string fullpath = Path.GetFullPath(path);
