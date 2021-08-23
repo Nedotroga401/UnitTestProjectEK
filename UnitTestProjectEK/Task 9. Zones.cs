@@ -12,7 +12,7 @@ using SeleniumExtras.WaitHelpers;
 namespace UnitTestProjectEK
 {
    [TestFixture]
-    public class CheckCountries
+    public class CheckZones
 
     {
         private IWebDriver driver;
@@ -25,7 +25,7 @@ namespace UnitTestProjectEK
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        public void CheckSortForList(string[] ListS, int s)
+        public void CheckForList(string[] ListS, int s)
         {
             string[] list_after = new string[s];
             for (int j = 0; j < s; j++)
@@ -59,7 +59,7 @@ namespace UnitTestProjectEK
             driver.FindElement(By.Name("username")).SendKeys("admin");
             driver.FindElement(By.Name("password")).SendKeys("admin");
             driver.FindElement(By.Name("login")).Click();
-            driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
+            driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=geo_zones";
 
             
            IList<IWebElement> allCountries = driver.FindElements(By.CssSelector("[class=row]"));
@@ -76,11 +76,11 @@ namespace UnitTestProjectEK
                 countries[i] = value.Text.ToString();
              }
 
-            CheckSortForList(countries, size);
+            
 
-            allCountries[37].FindElement(By.CssSelector("[href]")).Click();
+            allCountries[1].FindElement(By.CssSelector("[href]")).Click();
             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=dataTable]")));
-            IList<IWebElement> allZones = driver.FindElements(By.CssSelector("[name$='[name]']"));
+            IList<IWebElement> allZones = driver.FindElements(By.CssSelector("[name$='[zone_code]']"));
             int s = allZones.Count;
             Console.WriteLine("В этой стране есть"+s+" зон(ы)");
             string[] zoness = new string[size];
@@ -91,7 +91,7 @@ namespace UnitTestProjectEK
 
             
 
-            CheckSortForList(zoness, s);
+            CheckForList(zoness, s);
 
             driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
 
@@ -111,7 +111,7 @@ namespace UnitTestProjectEK
 
             allCountries2[222].FindElement(By.CssSelector("[href]")).Click();
             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=dataTable]")));
-            IList<IWebElement> allZonesUS = driver.FindElements(By.CssSelector("[name$='[name]']"));
+            IList<IWebElement> allZonesUS = driver.FindElements(By.CssSelector("[name$='[zone-code]']"));
             int ss = allZonesUS.Count;
             Console.WriteLine("В этой стране есть" + ss + " зон(ы)");
             string[] zonesUS = new string[size];
@@ -123,7 +123,7 @@ namespace UnitTestProjectEK
 
             
 
-            CheckSortForList(zonesUS, ss);
+            CheckForList(zonesUS, ss);
 
         }
 

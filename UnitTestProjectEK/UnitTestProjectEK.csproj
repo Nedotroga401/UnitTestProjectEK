@@ -114,6 +114,7 @@
     <Compile Include="Task 13. Basket check.cs" />
     <Compile Include="Task 8. Duck stickers.cs" />
     <Compile Include="Task 10. Product Page.cs" />
+    <Compile Include="Task 9. Zones.cs" />
     <Compile Include="Task 9. Countries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Login.cs" />

@@ -15,7 +15,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
-{
+{/*
     [TestFixture]
     public class ListCheck
 
@@ -93,5 +93,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }
+    }*/
 }

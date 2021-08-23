@@ -16,7 +16,7 @@ using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
 {
-   [TestFixture]
+  /* [TestFixture]
     public class AddDuck
 
     {
@@ -87,5 +87,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }
+    }*/
 }
