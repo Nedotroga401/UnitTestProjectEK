@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.DevTools.V91.CSS;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -59,71 +61,67 @@ namespace UnitTestProjectEK
             driver.FindElement(By.Name("username")).SendKeys("admin");
             driver.FindElement(By.Name("password")).SendKeys("admin");
             driver.FindElement(By.Name("login")).Click();
-            driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=geo_zones";
+            driver.Url = "http://localhost:8080/litecart/admin/?app=geo_zones&doc=geo_zones";
 
-            
-           IList<IWebElement> allCountries = driver.FindElements(By.CssSelector("[class=row]"));
-           int size = allCountries.Count;
-           string[] countries = new string[size];
-           int[] zones = new int[size];
-
-           WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+            IWebElement table = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=dataTable]")));
+            IList<IWebElement> allCountries = driver.FindElements(By.CssSelector("[class=row]"));
+            int size = allCountries.Count;
+            string[] countries = new string[size];
+            int[] zones = new int[size];
 
             for (int i=0; i < size; i++)
             {
-                IWebElement element = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=row]")));
-                IWebElement value = allCountries[i].FindElement(By.CssSelector("[href]"));
-                countries[i] = value.Text.ToString();
-             }
+                countries[i] = allCountries[i].FindElement(By.CssSelector("[href]")).GetAttribute("value");
+            }
 
+            allCountries[0].FindElement(By.CssSelector("[href]")).Click();
+            wait.Until(ExpectedConditions.ElementExists(By.Id("table-zones")));
             
-
-            allCountries[1].FindElement(By.CssSelector("[href]")).Click();
-            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=dataTable]")));
             IList<IWebElement> allZones = driver.FindElements(By.CssSelector("[name$='[zone_code]']"));
             int s = allZones.Count;
             Console.WriteLine("В этой стране есть"+s+" зон(ы)");
-            string[] zoness = new string[size];
+            string[] zoness = new string[s];
+
             for (int k = 0; k < s; k++)
             {
-                zoness[k] = allZones[k].GetAttribute("value").ToString();
+                SelectElement Select = new SelectElement(allZones[k]);
+                zoness[k] = Select.SelectedOption.GetAttribute("text");
             }
-
-            
 
             CheckForList(zoness, s);
 
-            driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
+            //Chech for USA
 
+            driver.Url = "http://localhost:8080/litecart/admin/?app=geo_zones&doc=geo_zones";
 
+            IWebElement table2 = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=dataTable]")));
             IList<IWebElement> allCountries2 = driver.FindElements(By.CssSelector("[class=row]"));
             int size2 = allCountries2.Count;
-            string[] countries2 = new string[size];
-            int[] zones2 = new int[size];
-            
+            string[] countries2 = new string[size2];
+            int[] zones2 = new int[size2];
 
-            for (int i = 0; i < size; i++)
+            for (int j = 0; j < size2; j++)
             {
-                IWebElement element = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=row]")));
-                IWebElement value = allCountries2[i].FindElement(By.CssSelector("[href]"));
-                countries2[i] = value.Text.ToString();
+                countries2[j] = allCountries2[j].FindElement(By.CssSelector("[href]")).GetAttribute("value");
             }
 
-            allCountries2[222].FindElement(By.CssSelector("[href]")).Click();
-            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=dataTable]")));
-            IList<IWebElement> allZonesUS = driver.FindElements(By.CssSelector("[name$='[zone-code]']"));
-            int ss = allZonesUS.Count;
-            Console.WriteLine("В этой стране есть" + ss + " зон(ы)");
-            string[] zonesUS = new string[size];
-            for (int m = 0; m < ss; m++)
+            allCountries2[1].FindElement(By.CssSelector("[href]")).Click();
+            wait.Until(ExpectedConditions.ElementExists(By.Id("table-zones")));
+
+            IList<IWebElement> allZones2 = driver.FindElements(By.CssSelector("[name$='[zone_code]']"));
+            int s2 = allZones2.Count;
+            Console.WriteLine("В этой стране есть" + s2 + " зон(ы)");
+            string[] zoness2 = new string[s2];
+
+            for (int l = 0; l < s2; l++)
             {
-                zonesUS[m] = allZonesUS[m].GetAttribute("value").ToString();
+                SelectElement Select = new SelectElement(allZones2[l]);
+                zoness2[l] = Select.SelectedOption.GetAttribute("text");
                 
             }
-
-            
-
-            CheckForList(zonesUS, ss);
+        
+            CheckForList(zoness2, s2);
 
         }
 

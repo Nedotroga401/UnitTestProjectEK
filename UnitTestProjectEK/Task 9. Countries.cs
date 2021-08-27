@@ -46,10 +46,13 @@ namespace UnitTestProjectEK
             {
                 Console.WriteLine("Расположены в алфавитном порядке");
             }
+
             else
             {
                 Console.WriteLine("Расположены не в алфавитном порядке");
             }
+        
+            
         }
 
         [Test]
@@ -60,14 +63,13 @@ namespace UnitTestProjectEK
             driver.FindElement(By.Name("password")).SendKeys("admin");
             driver.FindElement(By.Name("login")).Click();
             driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
 
-            
-           IList<IWebElement> allCountries = driver.FindElements(By.CssSelector("[class=row]"));
-           int size = allCountries.Count;
-           string[] countries = new string[size];
-           int[] zones = new int[size];
-
-           WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+            //Check Countries list
+            IList<IWebElement> allCountries = driver.FindElements(By.CssSelector("[class=row]"));
+            int size = allCountries.Count;
+            string[] countries = new string[size];
+            int[] zones = new int[size];
 
             for (int i=0; i < size; i++)
             {
@@ -76,55 +78,51 @@ namespace UnitTestProjectEK
                 countries[i] = value.Text.ToString();
              }
 
+            Console.WriteLine("Всего в списке " + size + " стран");
             CheckSortForList(countries, size);
+            
 
+            //Check Canada zones list
+            
             allCountries[37].FindElement(By.CssSelector("[href]")).Click();
             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=dataTable]")));
             IList<IWebElement> allZones = driver.FindElements(By.CssSelector("[name$='[name]']"));
             int s = allZones.Count;
-            Console.WriteLine("В этой стране есть"+s+" зон(ы)");
-            string[] zoness = new string[size];
+            
+            string[] zoness = new string[s];
             for (int k = 0; k < s; k++)
             {
                 zoness[k] = allZones[k].GetAttribute("value").ToString();
             }
 
+            int sc = s - 1;
+            Console.WriteLine("В стране " + countries[37] +" есть " + sc + " зон(ы)");
+            CheckSortForList(zoness, s);
             
 
-            CheckSortForList(zoness, s);
+            //Check USA zones list
 
             driver.Url = "http://localhost:8080/litecart/admin/?app=countries&doc=countries";
-
-
-            IList<IWebElement> allCountries2 = driver.FindElements(By.CssSelector("[class=row]"));
-            int size2 = allCountries2.Count;
-            string[] countries2 = new string[size];
-            int[] zones2 = new int[size];
-            
-
-            for (int i = 0; i < size; i++)
-            {
-                IWebElement element = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=row]")));
-                IWebElement value = allCountries2[i].FindElement(By.CssSelector("[href]"));
-                countries2[i] = value.Text.ToString();
-            }
-
-            allCountries2[222].FindElement(By.CssSelector("[href]")).Click();
             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=dataTable]")));
+            IList<IWebElement> allCountries2 = driver.FindElements(By.CssSelector("[class=row]"));
+            
+            allCountries2[223].FindElement(By.CssSelector("[href]")).Click();
+            wait.Until(ExpectedConditions.ElementExists(By.Id("table-zones")));
+            
             IList<IWebElement> allZonesUS = driver.FindElements(By.CssSelector("[name$='[name]']"));
             int ss = allZonesUS.Count;
-            Console.WriteLine("В этой стране есть" + ss + " зон(ы)");
-            string[] zonesUS = new string[size];
+            
+            string[] zonesUS = new string[ss];
             for (int m = 0; m < ss; m++)
             {
                 zonesUS[m] = allZonesUS[m].GetAttribute("value").ToString();
                 
             }
-
-            
-
+            int ssc = ss - 1;
+            Console.WriteLine("В стране " + countries[223]+ " есть "+ssc + " зон(ы)");
             CheckSortForList(zonesUS, ss);
-
+              
+         
         }
 
         [TearDown]
