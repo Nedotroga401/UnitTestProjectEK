@@ -11,9 +11,9 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
-{/*
+{
     [TestFixture]
-    public class CheckCountries
+    public class CheckProductPage
 
     {
         private IWebDriver driver;
@@ -32,92 +32,70 @@ namespace UnitTestProjectEK
             string redColor = element.FindElement(By.CssSelector("[class=campaign-price]")).GetCssValue("color");
         }
 
+        public int[] ColorParse(string sColor)
+        {
+            int[] color = new int[3];
+            string gC = sColor.Remove(0, 5).Replace(" ", "");
+            string[] gs = gC.Split(',');
+            for (int i=0; i<3; i++)
+            {
+                color[i] = Int32.Parse(gs[i]);
+            }
+            Console.WriteLine(color[0] + "/" + color[1]+ "/" + color[2]);
+            return color;
+        }
+
         [Test]
         public void ChekProductPage()
         {
             driver.Url = "http://localhost:8080/litecart/";
             IWebElement button = wait.Until(ExpectedConditions.ElementIsVisible(By.Id("box-campaigns")));
+
+            //Check Campaign Page
+           
+            string nameOnPage = button.FindElement(By.CssSelector("[class=name]")).Text;
             IWebElement campaignProduct = button.FindElement(By.CssSelector("[class=campaign-price]"));
             IWebElement regularProduct = button.FindElement(By.CssSelector("[class=regular-price]"));
-
-            string nameOnPage = button.FindElement(By.CssSelector("[class=name]")).Text;
-          
             string priceOnPage = campaignProduct.Text;
             string regularPrice = regularProduct.Text;
-
             string gColor = regularProduct.GetCssValue("color");
-            var gs = gColor.Split(' ').Select(Int32.Parse).ToArray();
-            
-            
-            if (gs[0] == gs[1] && gs[1] == gs[2])
-            {
-                Console.WriteLine("Regular color is grey");
-            }
-
+            int[] gs = ColorParse(gColor);
             string rColor = campaignProduct.GetCssValue("color");
-            
-            var rs = rColor.Split(' ').Select(Int32.Parse).ToArray();
-            if (rs[1]==0 && rs[2]==0)
-            {
-                Console.WriteLine("Campaign color is red");
-            }
-
+            int[] rs = ColorParse(rColor);
             string greyStyle = regularProduct.GetCssValue("text-decoration");
-            
-           if (greyStyle.Contains("line-through"))
-            {
-                Console.WriteLine("Grey text is line-through");
-            }
            
             string greyS = regularProduct.GetCssValue("font-size");
 
             string redS = campaignProduct.GetCssValue("font-size");
 
-            int j = String.Compare(redS, greyS);
-            if (j > 0)
-            {
-                Console.WriteLine("Red text is bigger");
-            }
+            int priceSizeCampaign = String.Compare(redS, greyS);
 
             string redStyle = campaignProduct.GetCssValue("font-weight");
             int.TryParse(redStyle, out int v);
-            if (v>550)
-                Console.WriteLine("Red text is bold");
+           // if (v>550)
+              //  Console.WriteLine("Red text is bold");
 
+            //Open Product Page
             button.Click();
 
             wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("[class=content]")));
+            string nameProduct = button.FindElement(By.CssSelector("[class=name]")).Text;
+
             IWebElement regProduct = driver.FindElement(By.CssSelector("[class=regular-price]"));
             IWebElement camProduct = driver.FindElement(By.CssSelector("[class=campaign-price]"));
+
+            string greyStyleP = regProduct.GetCssValue("text-decoration");
+
             string priceAfter = camProduct.Text;
             string regularPriceAfter = regProduct.Text;
-            
-
             string greyColor = regProduct.GetCssValue("color");
-           
             string redColor = camProduct.GetCssValue("color");
-
-
-            var gss = greyColor.Split(' ').Select(Int32.Parse).ToArray();
-            if (gss[0] == gs[1] && gss[1] == gs[2])
-            {
-                Console.WriteLine("Regular color on product page is grey");
-            }
-
-            
-            var rss = redColor.Split(' ').Select(Int32.Parse).ToArray();
-            if (rss[1] == 0 && rss[2] == 0)
-            {
-                Console.WriteLine("Campaign color on product page is red");
-            }
-
+            int[] gss = ColorParse(greyColor);
+            int[] rss = ColorParse(redColor);
             string redSize = camProduct.GetCssValue("font-size");
             string greySize = regProduct.GetCssValue("font-size");
-            int i = String.Compare(redSize, greySize);
-            if (i > 0)
-            {
-                Console.WriteLine("Red text is bigger");
-            }
+            int priceSizeProduct = String.Compare(redSize, greySize);
+            
 
             string greyStylep = regularProduct.GetCssValue("text-decoration");
 
@@ -128,19 +106,60 @@ namespace UnitTestProjectEK
 
             string redStylep = campaignProduct.GetCssValue("font-weight");
             int.TryParse(redStylep, out int vv);
-            if (vv > 550)
-                Console.WriteLine("Red text is bold");
+            //if (vv > 550)
+               // Console.WriteLine("Red text is bold");
 
-
-            if (priceOnPage == priceAfter && regularPrice==regularPriceAfter)
-            { Console.WriteLine("Price is the same");}
-
-            if (priceOnPage == priceAfter)
+            //Compare Part
+            //Part a) name
+            if (nameProduct == nameOnPage)
             {
-                Console.WriteLine("Name is the same");
+                Console.WriteLine("Name is the same on both page");
+            }
+
+            //Part b) Price
+
+            if (priceOnPage == priceAfter && regularPrice == regularPriceAfter)
+            {
+                Console.WriteLine("Price is the same on both page");
+            }
+
+            //Part c) Regular Price
+
+            if (gss[0] == gs[1] && gss[1] == gs[2])
+            {
+                Console.WriteLine("Regular price color is grey on product page");
+            }
+
+            if (gs[0] == gs[1] && gs[1] == gs[2])
+            {
+                Console.WriteLine("Regular price color is grey on main page page");
+            }
+
+            if (greyStyle.Contains("line-through") && greyStyleP.Contains("line - through"))
+            {
+                Console.WriteLine("Regular Price is line-through on both pages");
+            }
+            
+
+            //Part d) Campaign Price
+
+            if (rss[1] == 0 && rss[2] == 0)
+            {
+                Console.WriteLine("Campaign price color is red on product page");
+            }
+
+            if (rs[1] == 0 && rs[2] == 0)
+            {
+                Console.WriteLine("Campaign price color is red on main page");
             }
 
 
+            //Part e) Price size
+
+            if (priceSizeCampaign > 0 && priceSizeProduct> 0)
+            {
+                Console.WriteLine("Red text is bigger on both pages");
+            }
 
 
         }
@@ -153,5 +172,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }*/
+    }
 }
