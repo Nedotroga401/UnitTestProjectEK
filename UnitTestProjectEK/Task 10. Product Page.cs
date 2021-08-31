@@ -65,15 +65,26 @@ namespace UnitTestProjectEK
             string greyStyle = regularProduct.GetCssValue("text-decoration");
            
             string greyS = regularProduct.GetCssValue("font-size");
+            int.TryParse(greyS, out int greySizeNum);
 
             string redS = campaignProduct.GetCssValue("font-size");
+            int.TryParse(redS, out int redSizeNum);
 
-            int priceSizeCampaign = String.Compare(redS, greyS);
+            
+            bool priceSizeCampaign;
+             if (redSizeNum > greySizeNum)
+             {
+                 priceSizeCampaign = true;
+             }
+             else
+             {
+                 priceSizeCampaign = false;
+             }
+             
 
             string redStyle = campaignProduct.GetCssValue("font-weight");
             int.TryParse(redStyle, out int v);
-           // if (v>550)
-              //  Console.WriteLine("Red text is bold");
+           
 
             //Open Product Page
             button.Click();
@@ -92,10 +103,23 @@ namespace UnitTestProjectEK
             string redColor = camProduct.GetCssValue("color");
             int[] gss = ColorParse(greyColor);
             int[] rss = ColorParse(redColor);
+
             string redSize = camProduct.GetCssValue("font-size");
-            string greySize = regProduct.GetCssValue("font-size");
-            int priceSizeProduct = String.Compare(redSize, greySize);
+            int.TryParse(redSize, out int redProductSize);
             
+
+            string greySize = regProduct.GetCssValue("font-size");
+            int.TryParse(greySize, out int greyProductSize);
+
+            bool priceSizeProduct;
+             if (redProductSize > greyProductSize)
+             {
+                 priceSizeProduct = true;
+             }
+              else
+             {
+                 priceSizeProduct = false;
+             }
 
             string greyStylep = regularProduct.GetCssValue("text-decoration");
 
@@ -106,10 +130,9 @@ namespace UnitTestProjectEK
 
             string redStylep = campaignProduct.GetCssValue("font-weight");
             int.TryParse(redStylep, out int vv);
-            //if (vv > 550)
-               // Console.WriteLine("Red text is bold");
 
             //Compare Part
+
             //Part a) name
             if (nameProduct == nameOnPage)
             {
@@ -156,7 +179,7 @@ namespace UnitTestProjectEK
 
             //Part e) Price size
 
-            if (priceSizeCampaign > 0 && priceSizeProduct> 0)
+            if (priceSizeCampaign && priceSizeProduct)
             {
                 Console.WriteLine("Red text is bigger on both pages");
             }
