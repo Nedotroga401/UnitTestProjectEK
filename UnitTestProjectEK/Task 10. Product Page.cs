@@ -45,6 +45,15 @@ namespace UnitTestProjectEK
             return color;
         }
 
+        public int SizeParse(string color)
+        {
+            int size = new int();
+            string ccolor = color.Replace("px","");
+            int.TryParse(ccolor, out int s);
+            size = s;
+            return size;
+        }
+
         [Test]
         public void ChekProductPage()
         {
@@ -65,12 +74,11 @@ namespace UnitTestProjectEK
             string greyStyle = regularProduct.GetCssValue("text-decoration");
            
             string greyS = regularProduct.GetCssValue("font-size");
-            int.TryParse(greyS, out int greySizeNum);
+            int greySizeNum = SizeParse(greyS);
 
             string redS = campaignProduct.GetCssValue("font-size");
-            int.TryParse(redS, out int redSizeNum);
+            int redSizeNum = SizeParse(redS);
 
-            
             bool priceSizeCampaign;
              if (redSizeNum > greySizeNum)
              {
@@ -105,11 +113,10 @@ namespace UnitTestProjectEK
             int[] rss = ColorParse(redColor);
 
             string redSize = camProduct.GetCssValue("font-size");
-            int.TryParse(redSize, out int redProductSize);
-            
+            int redProductSize = SizeParse(redSize);
 
             string greySize = regProduct.GetCssValue("font-size");
-            int.TryParse(greySize, out int greyProductSize);
+            int greyProductSize = SizeParse(greyS);
 
             bool priceSizeProduct;
              if (redProductSize > greyProductSize)
@@ -181,7 +188,7 @@ namespace UnitTestProjectEK
 
             if (priceSizeCampaign && priceSizeProduct)
             {
-                Console.WriteLine("Red text is bigger on both pages");
+              Console.WriteLine("Red text is bigger on both pages");
             }
 
 
