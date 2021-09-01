@@ -16,7 +16,7 @@ namespace UnitTestProjectEK
     [TestFixture]
     public class BasketCheck
 
-    {/*
+    {
         private IWebDriver driver;
         private WebDriverWait wait;
 
@@ -110,7 +110,7 @@ namespace UnitTestProjectEK
         {
             driver.Quit();
             driver = null;
-        }*/
+        }
 
 
     }

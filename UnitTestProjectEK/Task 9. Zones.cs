@@ -12,7 +12,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
-{
+{/*
    [TestFixture]
     public class CheckZones
 
@@ -133,5 +133,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }
+    }*/
 }
