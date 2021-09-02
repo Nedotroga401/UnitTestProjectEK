@@ -33,6 +33,7 @@ namespace UnitTestProjectEK
            // driver.Url = "http://localhost:8080/litecart/";
             driver.Url = "https://litecart.stqa.ru/en/";
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            IWebElement carquantityTemp = wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("[class=quantity]")));
 
             for (int i = 0; i < 3; i++)
             {
@@ -59,9 +60,6 @@ namespace UnitTestProjectEK
                     IWebElement elementCart = driver.FindElement(By.CssSelector("[class=quantity]"));
                     
                     wait.Until(ExpectedConditions.TextToBePresentInElement(elementCart, ii));
-                    
-                    Console.WriteLine("Duck with size was selected");
-                    
                     driver.Navigate().GoToUrl("https://litecart.stqa.ru/en/");
                 }
                 else
@@ -79,30 +77,30 @@ namespace UnitTestProjectEK
 
              IWebElement carquantity = wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("[class=quantity]")));
              carquantity.Click();
-             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=content]")));
 
+             wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class=shortcuts]")));
+             IWebElement ShortCut = driver.FindElement(By.CssSelector("[class=shortcuts]"));
+             IList<IWebElement> ShortCuts = ShortCut.FindElements(By.CssSelector("[class=shortcut]"));
+            ShortCuts[0].Click();
+            int ShortCutsCount = ShortCuts.Count;
 
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < ShortCutsCount; j++)
             {
                 IList<IWebElement> order = driver.FindElements(By.Id("order_confirmation-wrapper"));
                 int orderCount = order.Count;
-
-                IWebElement pr = driver.FindElement(By.Name("remove_cart_item"));
-                pr.Click();
-
                 
                 if (orderCount != 0)
                 {
                    IList<IWebElement> elements = order[0].FindElements(By.CssSelector("[class=item]"));
                    string str = elements[j].Text;
-                   Console.WriteLine(str);
                    wait.Until(ExpectedConditions.InvisibilityOfElementWithText(By.CssSelector("[class=item]"), str));
                     
                 }
+
+                IWebElement pr = driver.FindElement(By.Name("remove_cart_item"));
+                pr.Click();
+
             }
-
-
-
         }
 
         [TearDown]
