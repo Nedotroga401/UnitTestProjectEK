@@ -11,7 +11,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 namespace UnitTestProjectEK
-{
+{/*
     [TestFixture]
     public class LinksCheckNew
 
@@ -92,6 +92,7 @@ namespace UnitTestProjectEK
 
                 driver.SwitchTo().Window(driver.WindowHandles.Last());
                 driver.Close();
+
                 driver.SwitchTo().Window(originalWindow);
             }
            
@@ -105,5 +106,5 @@ namespace UnitTestProjectEK
         }
 
 
-    }
+    }*/
 }
